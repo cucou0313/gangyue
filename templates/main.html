@@ -1,0 +1,25 @@
+<html>
+
+<head>
+    <title>港约,寻找志同道合</title>
+</head>
+
+<body style="background-color:rgb(128, 192, 201);">
+    <h1 style="font-size:50px;color:rgb(13, 131, 19);text-align:center"> 港约 </h1>
+    <a href="http://localhost:5000/user_info">个人信息</a>
+    <hr />
+    <h1>Hello {{ userName }}!</h1>
+    <ul>
+        {% for item in allText %}
+        <li>{{ item[0]|title }}</li>
+        <li>{{ item[1]|title }}</li>
+        <li>{{ item[2]|title }}</li>
+        <li>{{ item[3]|title }}</li>
+        <button>
+            <span>submit</span>
+        </button>
+        {% endfor %}
+    </ul>
+</body>
+
+</html>
