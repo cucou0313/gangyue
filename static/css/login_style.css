@@ -203,7 +203,7 @@
    color: #fff !important;
 }
 
-.button.login button.active span {
+/* .button.login button.active span {
    opacity: 0;
    transform: scale(0);
    -webkit-transform: scale(0);
@@ -215,7 +215,7 @@
    transform: scale(1) rotate(-0deg);
    -webkit-transform: scale(1) rotate(-0deg);
    -ms-transform: scale(1) rotate(-0deg);
-}
+} */
 
 .button.login button i.fa {
    width: 100%;
@@ -246,7 +246,7 @@
    z-index: 2;
 }
 
-.pass-forgot {
+.link {
    width: 100%;
    float: left;
    text-align: center;
