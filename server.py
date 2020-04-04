@@ -3,18 +3,18 @@ from flask import Flask, redirect, url_for, render_template, request, make_respo
 import pymysql
 import json
 app = Flask(__name__)
-db = pymysql.connect(host='localhost',
-                     user='root',
-                     password='0313',
-                     database="gangyue")
+# db = pymysql.connect(host='localhost',
+#                      user='root',
+#                      password='0313',
+#                      database="gangyue")
 # pythonanywherede 连接MySQL
 # NAME：pythonanywhere用户名+$+数据库名  cucou0313$gangyue
 # USER：pythonanywhere用户名 cucou0313
 # HOST：pythonanywhere用户名+.mysql.pythonanywhere-services.com  cucou0313.mysql.pythonanywhere-services.com
-# db = pymysql.connect(host='cucou0313.mysql.pythonanywhere-services.com',
-#                      user='cucou0313',
-#                      password='gangyue6',
-#                      database="cucou0313$gangyue")
+db = pymysql.connect(host='cucou0313.mysql.pythonanywhere-services.com',
+                     user='cucou0313',
+                     password='gangyue6',
+                     database="cucou0313$gangyue")
 db.ping(reconnect=True)
 cursor = db.cursor()
 
