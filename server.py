@@ -1,8 +1,20 @@
 from flask import Flask, redirect, url_for, render_template, request, make_response
 # url_for()函数对于动态构建特定函数的URL非常有用。该函数接受函数的名称作为第一个参数，以及一个或多个关键字参数，每个参数对应于URL的变量部分。
 import pymysql
+import json
 app = Flask(__name__)
-db = pymysql.connect("localhost", "root", "0313", "gangyue")
+db = pymysql.connect(host='localhost',
+                     user='root',
+                     password='0313',
+                     database="gangyue")
+# pythonanywherede 连接MySQL
+# NAME：pythonanywhere用户名+$+数据库名  cucou0313$gangyue
+# USER：pythonanywhere用户名 cucou0313
+# HOST：pythonanywhere用户名+.mysql.pythonanywhere-services.com  cucou0313.mysql.pythonanywhere-services.com
+# db = pymysql.connect(host='cucou0313.mysql.pythonanywhere-services.com',
+#                      user='cucou0313',
+#                      password='gangyue6',
+#                      database="cucou0313$gangyue")
 db.ping(reconnect=True)
 cursor = db.cursor()
 
@@ -16,25 +28,32 @@ def welcome():
 @app.route('/sign_in', methods=['POST', 'GET'])
 def sign_in():
     if request.method == 'POST':
-        userId = request.form['userId']
-        userPsd = request.form['userPsd']
+        # userId = request.form['userId']
+        # userPsd = request.form['userPsd']
+        userId = request.form.get('Id')
+        userPsd = request.form.get('Psd')
         # if userId is not None and userPsd is not None:
         sql = "SELECT * FROM user WHERE student_id = %s and password = %s" % (
             userId, userPsd)
         try:
-            cursor.execute(sql)
+            res = cursor.execute(sql)
             # fetchone为空时的返回集为None
-            res = cursor.fetchone()
-            if res is None:
-                print('User info error')
-                # 登录失败调回初始登录页
-                return redirect(url_for('sign_in'))
-            else:
-                # 验证通过，传参并跳转至主页面
-                resp = make_response(redirect(url_for('main')))
+            # res = cursor.fetchone()
+            # if res is None:
+            if res:
+                sqlData = cursor.fetchone()
+                # 验证通过，保存cookie并跳转至主页面
+                # resp = make_response("redirect(url_for('main'))")
+                # 登录时顺带传递name
+                userName = sqlData[2]
+                resp = make_response(userName)
                 resp.set_cookie('userId', userId)
+                resp.set_cookie('userName', userName)
                 resp.set_cookie('userPsd', userPsd)
                 return resp
+            else:
+                # 登录失败时，通过Ajax返回
+                return "User info error"
         except Exception as e:
             print('error', e)
         finally:
@@ -46,29 +65,29 @@ def sign_in():
 # 注册方法，连接MySQL写入
 @app.route('/sign_up', methods=['POST', 'GET'])
 def sign_up():
-    userId = request.form['userId']
-    userPsd = request.form['userPsd']
     if request.method == 'POST':
-        userIdvalid = True
+        userId = request.form.get('Id')
+        userName = request.form.get('Name')
+        userPsd = request.form.get('Psd')
+        userIdvalid = False
         sql = "SELECT * FROM user WHERE student_id = %s" % (userId)
         try:
-            cursor.execute(sql)
-            # fetchone为空时的返回集为None
-            res = cursor.fetchone()
-            if res is None:
-                userIdvalid = False
+            res = cursor.execute(sql)
+            if res:
+                return "User id has exist"
             else:
-                print('exist')
+                userIdvalid = True
         except Exception as e:
             print('error', e)
         finally:
-            if not userIdvalid:
-                sql = "INSERT INTO user(student_id,password) VALUES ('%s', '%s')" % (
-                    userId, userPsd)
+            if userIdvalid:
+                sql = "INSERT INTO user(student_id,name,password) VALUES ('%s', '%s', '%s')" % (
+                    userId, userName, userPsd)
                 cursor.execute(sql)
                 db.commit()
+                return "Register success"
         # 注册成功，跳转至主页面
-        return redirect(url_for('sign_in'))
+        # return redirect(url_for('sign_in'))
     elif request.method == 'GET':
         return render_template('sign_up.html')
 

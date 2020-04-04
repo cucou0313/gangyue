@@ -3,26 +3,32 @@
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="title" content="ScoopThemes">
-    <meta name="ROBOTS" content="">
-    <meta name="description" content="">
-    <meta name="abstract" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>港约,寻找志同道合</title>
 
-    <!-- Bootstrap -->
-    <link href="../static/css/bootstrap.css" rel="stylesheet">
-    <link href="../static/css/font-awesome.css" rel="stylesheet">
-    <link href="../static/css/bootstrap-theme.css" rel="stylesheet">
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="../static/js/jquery-3.4.1.min.js"></script>
+    <!-- popper.min.js 用于弹窗、提示、下拉菜单 -->
+    <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+    <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+    <script src="../static/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../static/css/animations.css">
 
     <!-- siimple style -->
     <link href="../static/css/style.css" rel="stylesheet">
+    <style>
+        /* Make the image fully responsive */
+        .carousel-inner img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 </head>
 
-<body>
-
+<body style="background:url(./static/img/main-bg-compressor.jpg) no-repeat center center; background-size:cover;">
     <div class="cloud floating">
         <img src="../static/img/cloud.png" alt="Scoop Themes">
     </div>
@@ -38,33 +44,120 @@
         <img src="../static/img/cloud.png" alt="Scoop Themes">
     </div>
 
-
-    <div id="wrapper">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 col-md-12 col-lg-12">
-                    <h1 class="subtitle">港 约</h1>
-                    <br />
-                    <br />
-                    <h2 class="subtitle">寻找志同道合的小伙伴！</h2>
-                    <br />
-                    <a href="/sign_in" class="btn btn-theme">登 录</a>
-                    <a href="/sign_up" class="btn btn-theme">注 册</a>
-                    <br />
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <br>
+                <br>
+                <div class="page-header">
+                    <h1 class="text-center display-1" style="color:rgb(255, 255, 255)">
+                        <strong>港 约</strong><br>
+                    </h1>
+                    <hr>
+                    <h3 class="text-center" style="color:rgb(255, 255, 255)">
+                        <em><small>寻找志同道合的小伙伴！</small></em>
+                    </h3>
                 </div>
+                <br>
+                <p class="text-center text-success">
+                    <a class="btn btn-primary btn-large" href="/sign_in"><strong>登 录</strong></a>
+                    &ensp;&ensp; &ensp;
+                    <a class="btn btn-primary btn-large" href="/sign_up"><strong>注 册</strong></a>
+                </p>
             </div>
-            <div class="row">
-                <br />
-                <br />
-                <br />
-                <br />
-                <div class="col-lg-6 col-lg-offset-3">
-                    <p class="copyright">软件工程综合训练01小组.</p>
+        </div>
+        <div class="row clearfix">
+            <div class="col-md-2 column">
+            </div>
+            <div class="col-md-8 column">
+                <div id="demo" class="carousel slide" data-ride="carousel">
+                    <!-- 指示符 -->
+                    <ul class="carousel-indicators">
+                        <li data-target="#demo" data-slide-to="0" class="active"></li>
+                        <li data-target="#demo" data-slide-to="1"></li>
+                        <li data-target="#demo" data-slide-to="2"></li>
+                    </ul>
+                    <!-- 轮播图片 -->
+                    <div class="carousel-inner" style="width:800px; height:250px">
+                        <div class="carousel-item active">
+                            <br>
+                            <h4>
+                                <strong>软件工程综合训练</strong><small>————01小组</small>
+                            </h4>
+                            <dl class="dl-horizontal" style="color:rgb(0, 0, 0)">
+                                <dt>
+                                    Scrum Master
+                                </dt>
+                                <dd>
+                                    >> 周越榕.
+                                </dd>
+                                <dt>
+                                    Product Owner
+                                </dt>
+                                <dd>
+                                    >> 张雯昕.
+                                </dd>
+                                <dt>
+                                    Team Members in Scrum
+                                </dt>
+                                <dd>
+                                    >> 巩效义. 张瑞彬. 温捷. 郭开阔.
+                                </dd>
+                            </dl>
+                            <br>
+                        </div>
+                        <div class="carousel-item">
+                            <h3>
+                                <strong>什么是港约</strong>
+                            </h3>
+                            <h5>
+                                在西安交通大学科技创新港地区能找到觅食、学习和兴趣爱好相同的志同道合的伙伴。
+                                <br>
+                                主要面向交大学生，而且实名认证，每个用户使用自己的学号和姓名进行注册。
+                            </h5>
+                        </div>
+                        <div class="carousel-item">
+                            <h3>
+                                <strong>可以做什么</strong>
+                            </h3>
+                            <h5>
+                                <strong>
+                                    <ol>
+                                        <li>
+                                            可以约饭拼单，找到对美食有同样需求的同学。
+                                        </li>
+                                        <li>
+                                            可以约上自习，在某个时间去5号楼或者图书馆看书，学习，讨论问题。
+                                        </li>
+                                        <li>
+                                            可以约运动，联系同学打羽毛球、篮球、游泳、网球等各项已于爱好。
+                                        </li>
+                                        <li>
+                                            可以约旅游，找到一块去周边景区的小伙伴游玩。
+                                        </li>
+                                        <li>
+                                            可以求助同学解决日常难题，比如修电脑，手机升级等等问题。
+                                        </li>
+                                        <li>
+                                            可以约K歌或者桌游等娱乐活动。
+                                        </li>
+                                    </ol>
+                                </strong>
+                            </h5>
+                        </div>
+                    </div>
+                    <!-- 左右切换按钮 -->
+                    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </a>
+                    <a class="carousel-control-next" href="#demo" data-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </a>
+                </div>
+                <div class="col-md-2 column">
                 </div>
             </div>
         </div>
-    </div>
-
 </body>
 
 </html>
