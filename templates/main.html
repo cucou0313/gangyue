@@ -1,25 +1,91 @@
-<html>
+<<!DOCTYPE html>
+    <html lang="zh-CN">
 
-<head>
-    <title>港约,寻找志同道合</title>
-</head>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<body style="background-color:rgb(128, 192, 201);">
-    <h1 style="font-size:50px;color:rgb(13, 131, 19);text-align:center"> 港约 </h1>
-    <a href="/user_info">个人信息</a>
-    <hr />
-    <h1>Hello {{ userId }}!</h1>
-    <ul>
-        {% for item in allText %}
-        <li>{{ item[0]|title }}</li>
-        <li>{{ item[1]|title }}</li>
-        <li>{{ item[2]|title }}</li>
-        <li>{{ item[3]|title }}</li>
-        <button>
-            <span>submit</span>
-        </button>
-        {% endfor %}
-    </ul>
-</body>
+        <title>港约,寻找志同道合</title>
+        <link rel="icon" type="image/gif" href="../static/img/xjtu.gif" />
+        <!-- 新 Bootstrap 核心 CSS 文件 -->
+        <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+        <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+        <script src="../static/js/jquery-3.4.1.min.js"></script>
+        <!-- popper.min.js 用于弹窗、提示、下拉菜单 -->
+        <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+        <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+        <script src="../static/js/bootstrap.min.js"></script>
+    </head>
 
-</html>
+    <!-- <body style="background-color:rgb(128, 192, 201);">
+        <h1 style="font-size:50px;color:rgb(13, 131, 19);text-align:center"> 港约 </h1>
+        <a href="/user_info">个人信息</a>
+        <hr />
+        <h1>Hello {{ userId }}!</h1>
+        <ul>
+            {% for item in allText %}
+            <li>{{ item[0]|title }}</li>
+            <li>{{ item[1]|title }}</li>
+            <li>{{ item[2]|title }}</li>
+            <li>{{ item[3]|title }}</li>
+            <button>
+                <span>submit</span>
+            </button>
+            {% endfor %}
+        </ul>
+    </body> -->
+
+    <body style="height:1500px">
+
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+            <a class="navbar-brand" href="#">
+                <img src="../static/img/white-title.png" alt="logo" style="width:200px;">
+            </a>
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Active</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul>
+            <!-- Navbar text-->
+            <!-- <span class="navbar-text">
+                Navbar text
+            </span> -->
+            <form class="form-inline">
+                <input class="form-control" type="text" placeholder="Search">
+                <button class="btn btn-success" type="submit">Search</button>
+            </form>
+        </nav>
+        <h1 style="font-size:50px;color:rgb(13, 131, 19);text-align:center"> 港约 </h1>
+        <a href="/user_info">个人信息</a>
+        <hr />
+        <h1>Hello {{ userId }}!</h1>
+        <ul>
+            {% for item in allText %}
+            <li>{{ item[0]|title }}</li>
+            <li>{{ item[1]|title }}</li>
+            <li>{{ item[2]|title }}</li>
+            <li>{{ item[3]|title }}</li>
+            <button>
+                <span>submit</span>
+            </button>
+            {% endfor %}
+        </ul>
+        <ul class="pagination pagination-lg">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+    </body>
+
+    </html>

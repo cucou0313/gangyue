@@ -3,20 +3,22 @@ from flask import Flask, redirect, url_for, render_template, request, make_respo
 import pymysql
 import json
 app = Flask(__name__)
-# db = pymysql.connect(host='localhost',
-#                      user='root',
-#                      password='0313',
-#                      database="gangyue")
+sqlconn = {
+    'host': 'localhost',
+    'user': 'root',
+    'password': '0313',
+    'database': 'gangyue'
+}
 # pythonanywherede 连接MySQL
 # NAME：pythonanywhere用户名+$+数据库名  cucou0313$gangyue
 # USER：pythonanywhere用户名 cucou0313
 # HOST：pythonanywhere用户名+.mysql.pythonanywhere-services.com  cucou0313.mysql.pythonanywhere-services.com
-db = pymysql.connect(host='cucou0313.mysql.pythonanywhere-services.com',
-                     user='cucou0313',
-                     password='gangyue6',
-                     database="cucou0313$gangyue")
-db.ping(reconnect=True)
-cursor = db.cursor()
+# sqlconn = {
+#     'host': 'cucou0313.mysql.pythonanywhere-services.com',
+#     'user': 'cucou0313',
+#     'password': 'gangyue6',
+#     'database': 'cucou0313$gangyue'
+# }
 
 
 @app.route('/')
@@ -28,6 +30,10 @@ def welcome():
 @app.route('/sign_in', methods=['POST', 'GET'])
 def sign_in():
     if request.method == 'POST':
+        db = pymysql.connect(host=sqlconn['host'],
+                             user=sqlconn['user'],
+                             password=sqlconn['password'],
+                             database=sqlconn['database'])
         # userId = request.form['userId']
         # userPsd = request.form['userPsd']
         userId = request.form.get('Id')
@@ -35,6 +41,7 @@ def sign_in():
         # if userId is not None and userPsd is not None:
         sql = "SELECT * FROM user WHERE student_id = %s and password = %s" % (
             userId, userPsd)
+        cursor = db.cursor()
         try:
             res = cursor.execute(sql)
             # fetchone为空时的返回集为None
@@ -57,7 +64,8 @@ def sign_in():
         except Exception as e:
             print('error', e)
         finally:
-            pass
+            cursor.close()
+            db.close()
     elif request.method == 'GET':
         return render_template('sign_in.html')
 
@@ -66,11 +74,16 @@ def sign_in():
 @app.route('/sign_up', methods=['POST', 'GET'])
 def sign_up():
     if request.method == 'POST':
+        db = pymysql.connect(host=sqlconn['host'],
+                             user=sqlconn['user'],
+                             password=sqlconn['password'],
+                             database=sqlconn['database'])
         userId = request.form.get('Id')
         userName = request.form.get('Name')
         userPsd = request.form.get('Psd')
         userIdvalid = False
         sql = "SELECT * FROM user WHERE student_id = %s" % (userId)
+        cursor = db.cursor()
         try:
             res = cursor.execute(sql)
             if res:
@@ -85,6 +98,8 @@ def sign_up():
                     userId, userName, userPsd)
                 cursor.execute(sql)
                 db.commit()
+                cursor.close()
+                db.close()
                 return "Register success"
         # 注册成功，跳转至主页面
         # return redirect(url_for('sign_in'))
@@ -110,6 +125,11 @@ def user_info():
                            userName=userName,
                            userPsd=userPsd)
 
+
+# @app.route('/logout')
+# def logout():
+#     session.pop('user', None)
+#     return redirect(url_for('login'), 302)
 
 if __name__ == '__main__':
     # 将debug = True可在debug模式中自动重启服务
