@@ -46,7 +46,7 @@ def sign_in():
         userId = request.form.get('Id')
         userPsd = request.form.get('Psd')
         # if userId is not None and userPsd is not None:
-        sql = "SELECT * FROM user WHERE student_id = %s and password = %s" % (
+        sql = "SELECT * FROM user WHERE student_id = %s and password = '%s'" % (
             userId, userPsd)
         cursor = pymysql_db.cursor()
         try:
