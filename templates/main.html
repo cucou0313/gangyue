@@ -1,91 +1,157 @@
-<<!DOCTYPE html>
-    <html lang="zh-CN">
+<!DOCTYPE html>
+<html lang="zh-CN">
 
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-        <title>港约,寻找志同道合</title>
-        <link rel="icon" type="image/gif" href="../static/img/xjtu.gif" />
-        <!-- 新 Bootstrap 核心 CSS 文件 -->
-        <link rel="stylesheet" href="../static/css/bootstrap.min.css">
-        <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-        <script src="../static/js/jquery-3.4.1.min.js"></script>
-        <!-- popper.min.js 用于弹窗、提示、下拉菜单 -->
-        <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
-        <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
-        <script src="../static/js/bootstrap.min.js"></script>
-    </head>
+    <title>港约,寻找志同道合</title>
+    <link rel="icon" type="image/gif" href="../static/img/xjtu.gif" />
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="../static/js/jquery-3.4.1.min.js"></script>
+    <!-- popper.min.js 用于弹窗、提示、下拉菜单 -->
+    <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+    <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+    <script src="../static/js/bootstrap.min.js"></script>
+</head>
 
-    <!-- <body style="background-color:rgb(128, 192, 201);">
-        <h1 style="font-size:50px;color:rgb(13, 131, 19);text-align:center"> 港约 </h1>
-        <a href="/user_info">个人信息</a>
-        <hr />
-        <h1>Hello {{ userId }}!</h1>
-        <ul>
-            {% for item in allText %}
-            <li>{{ item[0]|title }}</li>
-            <li>{{ item[1]|title }}</li>
-            <li>{{ item[2]|title }}</li>
-            <li>{{ item[3]|title }}</li>
-            <button>
-                <span>submit</span>
-            </button>
-            {% endfor %}
-        </ul>
-    </body> -->
+<body>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="row clearfix">
+                    <div class="col-md-2 column">
+                    </div>
+                    <div class="col-md-8 column">
+                        <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+                            <a class="navbar-brand" href="#">
+                                <img src="../static/img/white-title.png" alt="logo" style="width:130px;">
+                            </a>
+                            <ul class="navbar-nav">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="#"><strong>test1</strong></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#"><strong>test2</strong></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/user_info"><strong>个人信息</strong></a>
+                                </li>
+                            </ul>
+                            <!-- 导航栏居右的写法 justify-content-end -->
+                            <div class="collapse navbar-collapse justify-content-end">
+                                <ul class="navbar-nav">
+                                    <form class="form-inline" action="/search/1" method="POST" id="searchForm">
+                                        <input class="form-control" type="text" id="searchValue" name="searchValue"
+                                            placeholder="搜索...">
+                                        <button class="btn btn-primary" type="submit" id="searchBtn"
+                                            onclick="search();">Search</button>
+                                    </form>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/logout"><strong>退 出</strong></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                        <br><br><br><br>
+                        <h1>Hello {{ userName }}!</h1>
+                        <hr />
+                        {% for item in posts %}
+                        <div class="card">
+                            <div class="card-header bg-info text-white">
+                                <h4>title：{{ item.title }}</h4>
+                            </div>
+                            <div class="card-body bg-light text-dark">
+                                <li>category：{{ item.category }}</li>
+                                <li>added_time：{{ item.added_time }}</li>
+                                <li>user_id：{{ item.user_id }}</li>
+                            </div>
+                            <div class="card-footer bg-secondary text-white">
+                                <form>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">留言：</span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="写下你想说的..">
+                                    </div>
+                                    <button type="button">
+                                        <span>submit</span>
+                                    </button>
+                                </form>
+                            </div>
+                            <br>
+                            <hr />
+                            {% endfor %}
 
-    <body style="height:1500px">
+                            {%import 'pages.html' as pg%}
+                            {{pg.my_paginate(pagination,'main')}}
+                        </div>
+                    </div>
+                    <div class="col-md-2 column">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 模态框 -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">提 示</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- 模态框主体 -->
+                <div class="modal-body">
+                    <p id="alerttext">检索内容不能为空...</p>
+                </div>
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
-            <a class="navbar-brand" href="#">
-                <img src="../static/img/white-title.png" alt="logo" style="width:200px;">
-            </a>
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Active</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
-                </li>
-            </ul>
-            <!-- Navbar text-->
-            <!-- <span class="navbar-text">
-                Navbar text
-            </span> -->
-            <form class="form-inline">
-                <input class="form-control" type="text" placeholder="Search">
-                <button class="btn btn-success" type="submit">Search</button>
-            </form>
-        </nav>
-        <h1 style="font-size:50px;color:rgb(13, 131, 19);text-align:center"> 港约 </h1>
-        <a href="/user_info">个人信息</a>
-        <hr />
-        <h1>Hello {{ userId }}!</h1>
-        <ul>
-            {% for item in allText %}
-            <li>{{ item[0]|title }}</li>
-            <li>{{ item[1]|title }}</li>
-            <li>{{ item[2]|title }}</li>
-            <li>{{ item[3]|title }}</li>
-            <button>
-                <span>submit</span>
-            </button>
-            {% endfor %}
-        </ul>
-        <ul class="pagination pagination-lg">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-        </ul>
-    </body>
+    <script type="text/javascript">
+        function search() {
+            let searchValue = document.getElementById("searchValue").value;
+            console.log(searchValue);
+            if (searchValue == "") {
+                document.getElementById("alerttext").innerText = "检索内容不能为空..."
+                $("#myModal").modal();
+            } else {
+                $("#searchForm").submit();
+                // $.ajax({
+                //     type: 'POST',
+                //     url: "/search/1",
+                //     data: {
+                //         searchValue: searchValue,
+                //     },
+                //     cache: false,
+                //     error: function (err) {
+                //         document.getElementById("alerttext").innerText = "无法连接到服务器，请稍后再试..."
+                //         $("#myModal").modal();
+                //     },
+                //     success: function (data) {
+                //         if (data == "Query null") {
+                //             document.getElementById("alerttext").innerText = "没有找到相关检索内容..."
+                //             $("#myModal").modal();
+                //         } else {
+                //             document.getElementById("alerttext").innerText = "检索中..."
+                //             $("#myModal").modal();
+                //             setTimeout(function () {
+                //                 $("#ajaxUpdate").html(data);
+                //             }, 2000);
+                //         }
+                //     }
+                // });
+            }
+        }
+    </script>
+</body>
 
-    </html>
+</html>
