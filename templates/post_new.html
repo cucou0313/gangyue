@@ -1,0 +1,62 @@
+<html>
+
+<head>
+    <title>发布帖子</title>
+    <link rel="icon" type="image/gif" href="../static/img/xjtu.gif" />
+	 
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="../static/js/jquery-3.4.1.min.js"></script>
+    <!-- popper.min.js 用于弹窗、提示、下拉菜单 -->
+    <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+    <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+    <script src="../static/js/bootstrap.min.js"></script>
+</head>
+
+<body style="background-color:rgb(128, 192, 201);">
+    <h1 style="font-size:50px;color:rgb(13, 131, 19);text-align:center"> 港约 </h1>
+	<a  href="/user_info" id="userName">{{userName}}</a>
+	<a  style="visibility:hidden" id="userPsd">{{userPsd}}</a>
+   <h2>发布帖子</h2>
+	
+    <hr />
+    类别：<select id="category">
+			<option>运动</option>
+			<option>学习</option>
+			<option>觅食</option>
+			<option>娱乐</option>
+		</select>
+    <hr />
+    标题：<input id="title" style="width:600px"></input>
+	<hr/>
+    内容：<textarea style="width:600px;height:200px" id="content"></textarea>
+    <hr />
+	<button id="btnPost">发布</button>
+	<script>
+		$("#btnPost").click( ()=>{
+			const category = $("#category").find("option:selected").text();
+			const title = $("#title").val();
+			const content = $("#content").val();
+			const userName = $("#userName").text();
+			const userPsd = $("#userPsd").text();
+			console.log(category,title,content,userName,userPsd)
+			$.ajax({
+			"type": 'POST',
+			"url": "/post_new",
+			"data": JSON.stringify(
+				{ "category": category, "content":content,"title":title }
+			),
+			"success": (resbody) => {
+				console.log(resbody)
+				 
+			},
+			"error": (err) => {
+				console.log(err, err.status, err.responseText)
+			}
+		});
+		})
+	</script>
+</body>
+
+</html>
