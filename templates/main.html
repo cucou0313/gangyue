@@ -15,10 +15,55 @@
     <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
     <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
     <script src="../static/js/bootstrap.min.js"></script>
-</head>
+    <style>
+        body{
+            background-image: url(../static/img/mainpage_bg.png)
+        }
+        
+        .box{
+            position:fixed;
+            right:15px;
+            bottom: 20px;
+            height:50px;
+            width: 50px;    
+            text-align:center;
+            padding-top:20px;    
+            background-color: lightblue;
+            border-radius: 20%;
+            overflow: hidden;
+        }
+        /* .box:hover:before{
+            top:50%
+        } */
+        .box:hover{
+            /* visibility: hidden; */
+            cursor:pointer;
+        }
+        /* .box:before{
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            content:'回到顶部';
+            width: 40px;
+            color:peru;
+            font-weight:bold;
+        }     */
+        .box-in{
+            visibility: visible;
+            display:inline-block;
+            height:20px;
+            width: 20px;
+            border: 3px solid black;
+            border-color: white transparent transparent white;
+            transform:rotate(45deg);
+        }
+
+    </style>
+</head> 
 
 <body>
-    <div class="container">
+    <div class="container" name="top">
         <div class="row clearfix">
             <div class="col-md-12 column">
                 <div class="row clearfix">
@@ -115,8 +160,29 @@
             </div>
         </div>
     </div>
-
+    <div id="box" class="box">
+        <div class="box-in"></div>
+    </div> 
     <script type="text/javascript">
+
+        var timer  = null;
+        box.onclick = function(){
+            cancelAnimationFrame(timer);
+            //获取当前毫秒数
+            var startTime = +new Date();     
+            //获取当前页面的滚动高度
+            var b = document.body.scrollTop || document.documentElement.scrollTop;
+            var d = 700;
+            var c = b;
+            timer = requestAnimationFrame(function func(){
+                var t = d - Math.max(0,startTime - (+ new Date()) + d);
+                document.documentElement.scrollTop = document.body.scrollTop = t * (-c) / d + b;
+                timer = requestAnimationFrame(func);
+                if(t == d){
+                cancelAnimationFrame(timer);
+                }
+            });
+        }
         function search() {
             let searchValue = document.getElementById("searchValue").value;
             console.log(searchValue);
