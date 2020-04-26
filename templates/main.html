@@ -341,7 +341,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">留言：</span>
                                         </div>
-                                        <input id="replyinput" name="replyinput" type="text" class="form-control"
+                                        <input id="replyinput{{ item.id }}" type="text" class="form-control"
                                             placeholder="写下你想说的..">
                                     </div>
                                     <button type="button" class="btn btn-primary"
@@ -559,7 +559,7 @@
                 }
 
                 function submitReply(postId) {
-                    let replytext = document.getElementById("replyinput").value;
+                    let replytext = document.getElementById("replyinput" + postId).value;
                     $.ajax({
                         type: 'POST',
                         url: "/add_reply",
