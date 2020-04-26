@@ -332,7 +332,7 @@
                             </div>
                         </div>
                         <div class="card-footer bg-light text-white">
-                            <button type="button" class="btn" onclick="updateReply({{ item.id }})"
+                            <button id="collapseBtn" type="button" class="btn" onclick="updateReply({{ item.id }})"
                                 data-toggle="collapse" data-target="#demo{{ item.id }}"> <i
                                     class="fa fa-comments-o fa-2x "></i>
                                 <span class="badge badge-light"> ... </span></button>
@@ -541,24 +541,42 @@
                     });
                 }
 
+                var interval_1 = null;
+                var postId_temp = null;
+                // 定时器刷新reply,模拟及时聊天
                 function updateReply(postId) {
-                    //折叠时ajax
-                    if (!$("#demo" + postId).hasClass("show"))
-                        $.ajax({
-                            type: 'POST',
-                            url: "/reply",
-                            data: {
-                                postId: postId,
-                            },
-                            cache: false,
-                            error: function (err) {
-                                document.getElementById("alerttext").innerText = "无法连接到服务器，请稍后再试..."
-                                $("#myModal").modal();
-                            },
-                            success: function (data) {
-                                $("#reply" + postId).html(data);
-                            }
-                        });
+                    if (!$("#demo" + postId).hasClass("show")) {
+                        postId_temp = postId;
+                        getReply();
+                        // 将其他collapse收回折叠状态，仅保留当前reply窗口
+                        $('.collapse').collapse('hide');
+                        console.log("start interval", postId);
+                        interval_1 = setInterval(
+                            getReply, 10000);
+                    } else {
+                        clearInterval(interval_1);
+                        console.log("stop interval");
+                    }
+                }
+
+                function getReply() {
+                    console.log("ajax", postId_temp);
+                    $.ajax({
+                        type: 'POST',
+                        url: "/reply",
+                        data: {
+                            postId: postId_temp,
+                        },
+                        cache: false,
+                        error: function (err) {
+                            document.getElementById("alerttext").innerText =
+                                "无法连接到服务器，请稍后再试..."
+                            $("#myModal").modal();
+                        },
+                        success: function (data) {
+                            $("#reply" + postId_temp).html(data);
+                        }
+                    });
                 }
 
                 function submitReply(postId) {
@@ -581,30 +599,44 @@
                     });
                 }
 
-                var other_id_temp;
-                var other_name_temp;
+                var other_id_temp = null;
+                var other_name_temp = null;
+                var interval_2 = null;
 
                 function openChat(other_id, other_name) {
-                    // alert(other_id)
-                    // alert(other_name)
+                    document.getElementById("chathead").innerText = "与" + other_name + "的会话..."
+                    other_id_temp = other_id;
+                    other_name_temp = other_name;
+                    getChat();
+                    $("#myChatModal").modal();
+
+                    console.log("start chat interval", other_id, other_name);
+                    interval_2 = setInterval(
+                        getChat, 10000);
+                }
+                $(function () {
+                    $('#myChatModal').on('hide.bs.modal',
+                        function () {
+                            clearInterval(interval_2);
+                            console.log("stop chat interval");
+                        })
+                });
+
+                function getChat() {
+                    console.log("chat ajax", other_id_temp, other_name_temp);
                     $.ajax({
                         type: 'POST',
                         url: "/chat",
                         data: {
-                            other_id: other_id,
-                            other_name: other_name,
+                            other_id: other_id_temp,
+                            other_name: other_name_temp,
                         },
                         cache: false,
                         error: function (err) {
-                            document.getElementById("alerttext").innerText = "无法连接到服务器，请稍后再试..."
-                            $("#myModal").modal();
+                            alert("无法连接到服务器，请稍后再试...");
                         },
                         success: function (data) {
                             $("#chatDiv").html(data);
-                            document.getElementById("chathead").innerText = "与" + other_name + "的会话..."
-                            other_id_temp = other_id;
-                            other_name_temp = other_name;
-                            $("#myChatModal").modal();
                         }
                     });
                 }
