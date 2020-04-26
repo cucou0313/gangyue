@@ -319,8 +319,11 @@
                                         src="{{ url_for('static', filename='img/me.png') }}" />
                                     <span class="name">
                                         <span
-                                            class="htitle owner">{{ item.user_id }}</span><strong>{{ item.added_time }}</strong>
-                                    </span>
+                                            class="htitle owner">{{ item.name }}</span><strong>{{ item.added_time }}</strong>
+                                        {% if item.user_id!=userId%}
+                                        <a href="javascript:void(0);"
+                                            onclick="openChat('{{ item.user_id }}','{{ item.name }}');">私聊</a>
+                                        {% endif %}</span>
                                     <span class="content">
                                         <h5>正文：</h5>
                                         <hr />😀 >>> {{ item.content }}

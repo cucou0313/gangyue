@@ -143,6 +143,22 @@ class Post(db.Model):
     is_knot = db.Column(db.Integer, nullable=False, default=0)
 
 
+class PostName(db.Model):
+    __tablename__ = 'postname'
+    id = db.Column(db.Integer,
+                   primary_key=True,
+                   autoincrement=True,
+                   nullable=False)
+    title = db.Column(db.Text, nullable=False)
+    category = db.Column(db.String(20), nullable=False)
+    added_time = db.Column(db.DateTime, nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    user_id = db.Column(db.Integer, nullable=False)
+    is_active = db.Column(db.Integer, nullable=False, default=1)
+    is_knot = db.Column(db.Integer, nullable=False, default=0)
+    name = db.Column(db.String(20), nullable=False)
+
+
 # @app.route('/main/<int:page>', methods=['POST', 'GET'])
 # def main(page=1):
 #     userName = request.cookies.get('userName')
@@ -307,8 +323,10 @@ def main(category='all', page=1):
     student_id = request.cookies.get('student_id')
     userId = request.cookies.get('userId')
     if category == 'all':
-        paginate = Post.query.order_by(Post.added_time.desc()).paginate(
-            page, per_page=10, error_out=False)
+        paginate = PostName.query.order_by(
+            PostName.added_time.desc()).paginate(page,
+                                                 per_page=10,
+                                                 error_out=False)
     elif category == 'mine':
         paginate = Post.query.filter(Post.user_id == userId).order_by(
             Post.added_time.desc()).paginate(page,
@@ -333,6 +351,7 @@ def main(category='all', page=1):
         'url': 'main',
         'category': category
     }
+    print(data)
     return render_template('main.html', **data)
 
 
