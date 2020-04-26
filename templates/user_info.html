@@ -1,20 +1,33 @@
-<html>
-
-<head>
-    <title>个人信息</title>
-    <link rel="icon" type="image/gif" href="../static/img/xjtu.gif" />
-</head>
-
-<body style="background-color:rgb(128, 192, 201);">
-    <h1 style="font-size:50px;color:rgb(13, 131, 19);text-align:center"> 港约 </h1>
-    <a href="/user_info">个人信息</a>
-    <hr />
-    <p>账号:</p>
-    <p>{{ userName }}</p>
-    <hr />
-    <p>密码:</p>
-    <p>{{ userPsd }}</p>
-    <hr />
-</body>
-
-</html>
+<div>
+    <div class="p-2 bg-light ">
+        <br>
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"
+                    style="width: 130px; text-align:center;margin-left:auto;margin-right:auto;display:block;">
+                    <i class="fa fa-user-circle "></i> 学 号：
+                </span>
+            </div>
+            <input type="text" name="userId" id="id" onblur="regexpId();" class="form-control"
+                placeholder="{{userinfo["student_id"]}}">
+        </div>
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"
+                    style="width: 130px; text-align:center;margin-left:auto;margin-right:auto;display:block;">
+                    <i class="fa fa-id-card" aria-hidden="true"></i> 姓 名：
+                </span>
+            </div>
+            <input type="text" name="userName" id="name" class="form-control" placeholder="{{userinfo["name"]}}">
+        </div>
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend text-center">
+                <span class="input-group-text"
+                    style="width: 130px; text-align:center;margin-left:auto;margin-right:auto;display:block;">
+                    <i class="fa fa-key fa-fw"></i> 密 码：
+                </span>
+            </div>
+            <input type="password" name="userPsd" id="pass" class="form-control" placeholder="{{userinfo["password"]}}">
+        </div>
+    </div>
+</div>

@@ -15,6 +15,8 @@
     <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
     <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
     <script src="../static/js/bootstrap.min.js"></script>
+    <!-- fonticon -->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
 <body style="background:url(./static/img/main-bg-compressor.jpg) no-repeat center center; background-size:cover;">
@@ -27,7 +29,7 @@
                     <br><br><br><br><br>
                     <div class="d-flex flex-column mb-3">
                         <div class="p-2 bg-success text-white">
-                            <h2><strong> 登 录</strong></h2>
+                            <h2> <i class="fa fa-sign-in" aria-hidden="true"></i><strong> 登 录</strong></h2>
                         </div>
                         <div class="p-2 bg-light ">
                             <br>
@@ -35,7 +37,8 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"
                                         style="width: 100px; text-align:center;margin-left:auto;margin-right:auto;display:block;">
-                                        学 号：</span>
+                                        <i class="fa fa-user-circle "></i>
+                                    </span>
                                 </div>
                                 <input type="text" name="userId" id="id" onblur="regexpId();" class="form-control"
                                     placeholder="请输入学号..">
@@ -44,7 +47,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"
                                         style="width: 100px; text-align:center;margin-left:auto;margin-right:auto;display:block;">
-                                        密 码：</span>
+                                        <i class="fa fa-key fa-fw"></i></span>
                                 </div>
                                 <input type="password" name="userPsd" id="pass" class="form-control"
                                     placeholder="请输入密码..">
@@ -57,13 +60,15 @@
                                 <div class="col-md-3 column">
                                     <!-- 要为button确定type="button"，默认为type="submit" -->
                                     <button type="button" onclick="checklogin();" class="btn btn-info btn-lg">
+                                        <i class="fa fa-sign-in" aria-hidden="true"></i>
                                         <strong>登 录</strong>
                                     </button>
                                 </div>
                                 <div class="col-md-3 column">
                                     <!-- <button type="button" class="btn btn-danger btn-lg"><strong>注 册</strong></button> -->
-                                    <a href="/sign_up" class="btn btn-danger btn-lg" role="button"><strong>注
-                                            册</strong>
+                                    <a href="/sign_up" class="btn btn-danger btn-lg" role="button"><i
+                                            class="fa fa-user-plus" aria-hidden="true"></i>
+                                        <strong>注 册</strong>
                                     </a>
                                 </div>
                                 <div class="col-md-3 column">
@@ -152,7 +157,7 @@
                                 $("#myModal").modal();
                                 // document.write(data)
                                 setTimeout(function () {
-                                    window.location.href = 'main/1';
+                                    window.location.href = 'main/all/1';
                                 }, 2000);
                             }
                         }

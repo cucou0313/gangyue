@@ -6,65 +6,557 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>港约,寻找志同道合</title>
-    <link rel="icon" type="image/gif" href="../static/img/xjtu.gif" />
+    <link rel="icon" type="image/gif" href="{{ url_for('static', filename='img/xjtu.gif') }}" />
     <!-- 新 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-    <script src="../static/js/jquery-3.4.1.min.js"></script>
+    <script src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-select.min.css') }}">
     <!-- popper.min.js 用于弹窗、提示、下拉菜单 -->
     <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
     <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
-    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <!-- 侧边栏 -->
+    <link href="{{ url_for('static', filename='css/canvi.css') }}" rel="stylesheet" type="text/css">
+    <!-- chatbox -->
+    <link type="text/css" href="{{ url_for('static', filename='css/litewebchat.min.css') }}" rel="stylesheet" />
+    <!-- fonticon -->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="{{ url_for('static', filename='js/bootstrap-select.min.js') }}"></script>
+    <style>
+        #topBtn {
+            position: fixed;
+            bottom: 50px;
+            right: 50px;
+            width: 60px;
+            height: 60px;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="row clearfix">
-            <div class="col-md-12 column">
-                <div class="row clearfix">
-                    <div class="col-md-2 column">
-                    </div>
-                    <div class="col-md-8 column">
-                        <br><br><br><br>
-                        <h1>检索结果</h1>
-                        <hr />
-                        {% for item in posts %}
-                        <div class="card">
-                            <div class="card-header bg-info text-white">
-                                <h4>title：{{ item.title }}</h4>
+    <aside class="js-canvi-navbar--right canvi-navbar">
+        <div class="canvi-user-info">
+            <div class="canvi-user-info__image">
+                <img src="{{ url_for('static', filename='img/icon.png') }}">
+            </div>
+            <div class="canvi-user-info__data">
+                <span class="canvi-user-info__title">{{ userName }}</span>
+                <a href="#" class="canvi-user-info__meta">{{ student_id }}</a>
+            </div>
+        </div>
+        <ul class="canvi-navigation">
+            <li>
+                <a href="#" onclick="openuserInfo()" class="canvi-navigation__item">
+                    <span class="canvi-navigation__icon-wrapper" style="background: #002B40;">
+                        <span class="canvi-navigation__icon icon-iconmonstr-code-11">
+                            <i class="fa fa-mortar-board" aria-hidden="true"></i>
+                        </span>
+                    </span>
+                    <span class="canvi-navigation__text">个 人 信 息</span>
+                </a>
+            </li>
+            <li>
+                <a href="/logout" class="canvi-navigation__item">
+                    <span class="canvi-navigation__icon-wrapper" style="background: #009CE5;">
+                        <span class="canvi-navigation__icon icon-iconmonstr-code-13"><i class="fa fa-sign-out"
+                                aria-hidden="true"></i>
+                        </span>
+                    </span>
+                    <span class="canvi-navigation__text">
+                        注 销 退 出</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+    <main class="js-canvi-content canvi-content">
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+                        <a class="navbar-brand" href="#">
+                            <img src="{{ url_for('static', filename='img/white-title.png') }}" alt="logo"
+                                style="width:130px;">
+                        </a>
+                        <ul class="navbar-nav">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/main/all/1"><i class="fa fa-home fa-2x"
+                                        aria-hidden="true"></i><strong> 返回主页
+                                    </strong></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" onclick="openPost()"><i class="fa fa-leanpub fa-2x"
+                                        aria-hidden="true"></i><strong> 发布</strong></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" onclick="openuserInfo()"><i
+                                        class="fa fa-address-card fa-2x" aria-hidden="true"></i><strong></strong>
+                                    个人信息</strong></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" onclick="javascript:location.reload();"><i
+                                        class="fa fa-spinner fa-2x fa-spin" aria-hidden="true"></i>
+                                    <strong> 刷新</strong></a>
+                            </li>
+                        </ul>
+                        <!-- 导航栏居右的写法 justify-content-end -->
+                        <div class="collapse navbar-collapse justify-content-end">
+                            <ul class="navbar-nav">
+                                <form class="form-inline" action="/search/1" method="POST" id="searchForm">
+                                    <input class="form-control" type="text" id="searchValue" name="searchValue"
+                                        placeholder="搜索...">
+                                    <button class="btn btn-primary" type="submit" id="searchBtn" onclick="search();"><i
+                                            class="fa fa-search" aria-hidden="true"></i>
+                                        Search</button>
+                                </form>
+                                <li class="nav-item">
+                                    <a class="nav-link  js-canvi-open-button--right btn">
+                                        <i class="fa fa-gears fa-spin fa-2x"></i>
+                                        <strong>More Info</strong></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+
+
+                    <br><br><br><br>
+                    <h1>检索结果</h1>
+                    <hr />
+                    {% for item in posts %}
+                    <!-- 结贴 -->
+                    <div class="card">
+                        {% if item.category=='觅食'%}
+                        <div class="card-header bg-success text-white">
+                            <div style="float: left;">
+                                <h4><i class="fa fa-cutlery " aria-hidden="true"></i> 标题： {{ item.title }}</h4>
                             </div>
-                            <div class="card-body bg-light text-dark">
-                                <li>category：{{ item.category }}</li>
-                                <li>added_time：{{ item.added_time }}</li>
-                                <li>user_id：{{ item.user_id }}</li>
+                            {% if item.is_knot==0 and item.user_id==userId%}
+                            <div style="float: right;" id="knotdiv{{ item.id }}">
+                                <button type="button" onclick="knotPost( {{ item.id }});"
+                                    class="btn  btn-warning rounded-circle "><strong>结贴</strong></button>
                             </div>
-                            <div class="card-footer bg-secondary text-white">
+                            {% elif item.is_knot==1%}
+                            <div style="float: right;">
+                                <button type="button" disabled="disabled"
+                                    class="btn btn-dark rounded-circle "><strong>已结</strong></button>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% elif item.category=='运动'%}
+                        <div class="card-header bg-danger text-white">
+                            <div style="float: left;">
+                                <h4><i class="fa fa-futbol-o " aria-hidden="true"></i> 标题： {{ item.title }}</h4>
+                            </div>
+                            {% if item.is_knot==0 and item.user_id==userId%}
+                            <div style="float: right;" id="knotdiv{{ item.id }}">
+                                <button type="button" onclick="knotPost( {{ item.id }});"
+                                    class="btn  btn-warning rounded-circle "><strong>结贴</strong></button>
+                            </div>
+                            {% elif item.is_knot==1%}
+                            <div style="float: right;">
+                                <button type="button" disabled="disabled"
+                                    class="btn btn-dark rounded-circle "><strong>已结</strong></button>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% elif item.category=='学习'%}
+                        <div class="card-header bg-primary text-white">
+                            <div style="float: left;">
+                                <h4><i class="fa fa-book " aria-hidden="true"></i> 标题： {{ item.title }}</h4>
+                            </div>
+                            {% if item.is_knot==0 and item.user_id==userId%}
+                            <div style="float: right;" id="knotdiv{{ item.id }}">
+                                <button type="button" onclick="knotPost( {{ item.id }});"
+                                    class="btn  btn-warning rounded-circle "><strong>结贴</strong></button>
+                            </div>
+                            {% elif item.is_knot==1%}
+                            <div style="float: right;">
+                                <button type="button" disabled="disabled"
+                                    class="btn btn-dark rounded-circle "><strong>已结</strong></button>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% elif item.category=='娱乐'%}
+                        <div class="card-header bg-info text-white">
+                            <div style="float: left;">
+                                <h4><i class="fa fa-gamepad " aria-hidden="true"></i> 标题： {{ item.title }}</h4>
+                            </div>
+                            {% if item.is_knot==0 and item.user_id==userId%}
+                            <div style="float: right;" id="knotdiv{{ item.id }}">
+                                <button type="button" onclick="knotPost( {{ item.id }});"
+                                    class="btn  btn-warning rounded-circle "><strong>结贴</strong></button>
+                            </div>
+                            {% elif item.is_knot==1%}
+                            <div style="float: right;">
+                                <button type="button" disabled="disabled"
+                                    class="btn btn-dark rounded-circle "><strong>已结</strong></button>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        <div class="card-body bg-light text-dark">
+                            <div class="lite-chatbox">
+                                <div class="cleft cmsg">
+                                    <img class="headIcon radius" ondragstart="return false;"
+                                        oncontextmenu="return false;"
+                                        src="{{ url_for('static', filename='img/me.png') }}" />
+                                    <span class="name"><span
+                                            class="htitle owner">{{ item.user_id }}</span><strong>{{ item.added_time }}</strong>
+                                    </span>
+                                    <span class="content">
+                                        <h5>正文：</h5>
+                                        <hr />😀 >>> {{ item.content }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light text-white">
+                            <button type="button" class="btn" onclick="updateReply({{ item.id }})"
+                                data-toggle="collapse" data-target="#demo{{ item.id }}"> <i
+                                    class="fa fa-comments-o fa-2x "></i>
+                                <span class="badge badge-light"> ... </span></button>
+                            <div id="demo{{ item.id }}" class="collapse">
+                                <div id="reply{{ item.id }}"></div>
+                                <hr />
                                 <form>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">留言：</span>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="写下你想说的..">
+                                        <input id="replyinput" name="replyinput" type="text" class="form-control"
+                                            placeholder="写下你想说的..">
                                     </div>
-                                    <button type="button">
-                                        <span>submit</span>
-                                    </button>
+                                    <button type="button" class="btn btn-primary"
+                                        onclick="submitReply({{ item.id }})"><i class="fa fa-commenting-o"
+                                            aria-hidden="true"> Submit </i> </button>
                                 </form>
                             </div>
-                            <br>
-                            <hr />
-                            {% endfor %}
-
-                            {%import 'pages.html' as pg%}
-                            {{pg.my_paginate(pagination,'search')}}
                         </div>
+                        <br>
+                        <hr />
+                        <hr />
+                        {% endfor %}
+
+                        {%import 'pages.html' as pg%}
+                        {{pg.my_paginate(pagination,'search')}}
                     </div>
-                    <div class="col-md-2 column">
-                    </div>
+
+                    <div id="topBtn"><i class="fa fa-arrow-circle-o-up fa-4x" aria-hidden="true"></i></div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </main>
+    <!-- 模态框 -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">提 示</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- 模态框主体 -->
+                <div class="modal-body">
+                    <p id="alerttext">检索内容不能为空...</p>
+                </div>
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
                 </div>
             </div>
         </div>
     </div>
+    <!-- 私聊模态框 -->
+    <div class="modal fade" id="myChatModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 id="chathead" class="modal-title">模态框头部</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- 模态框主体 -->
+                <div id="chatDiv" class="modal-body">
+                    模态框内容..
+                </div>
+
+                <!-- 模态框底部 -->
+                <div class="modal-footer" id="chatbottom">
+                    <form>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">chat：</span>
+                            </div>
+                            <input id="chatinput" type="text" class="form-control" placeholder="请输入..">
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="submitChat()"><i
+                                class="fa fa-commenting-o" aria-hidden="true"> Submit </i> </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- 发帖模态框 -->
+    <div class="modal fade" id="myPostModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">发布...</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- 模态框主体 -->
+                <div id="postDiv" class="modal-body">
+                    <div class="panel panel-success">
+                        <div class="panel-heading ">
+                            <h3 class="panel-title">发布帖子</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <select class="selectpicker" id="category">
+                                        <option>运动</option>
+                                        <option>学习</option>
+                                        <option>觅食</option>
+                                        <option>娱乐</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <input type="text" class="form-control" id="title" placeholder="请输入标题">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <textarea class="form-control" rows="3" placeholder="请输入内容"
+                                            id="content"></textarea>
+                                    </div>
+                                </div>
+                        </div>
+
+                        <!-- 模态框底部 -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" onclick="postNew()"> Submit </i> </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <script src="{{ url_for('static', filename='js/canvi.js') }}"></script>
+            <script>
+                var t = new Canvi({
+                    content: ".js-canvi-content",
+                    isDebug: !1,
+                    navbar: ".myCanvasNav",
+                    openButton: ".js-canvi-open-button--left",
+                    position: "left",
+                    pushContent: !1,
+                    speed: "0.3s",
+                    width: "100vw",
+                    responsiveWidths: [{
+                        breakpoint: "600px",
+                        width: "280px"
+                    }, {
+                        breakpoint: "1280px",
+                        width: "250px"
+                    }, {
+                        breakpoint: "1600px",
+                        width: "380px"
+                    }]
+                })
+            </script>
+            <script type="text/javascript">
+                var canviRight = new Canvi({
+                    content: '.js-canvi-content',
+                    navbar: '.js-canvi-navbar--right',
+                    openButton: '.js-canvi-open-button--right',
+                    position: "right"
+                });
+            </script>
+            <script type="text/javascript">
+                function search() {
+                    let searchValue = document.getElementById("searchValue").value;
+                    console.log(searchValue);
+                    if (searchValue == "") {
+                        document.getElementById("alerttext").innerText = "检索内容不能为空..."
+                        $("#myModal").modal();
+                    } else {
+                        $("#searchForm").submit();
+                    }
+                }
+
+                function openPost() {
+                    $("#myPostModal").modal();
+                }
+
+                function postNew() {
+                    const category = $('#category').selectpicker().val();
+                    const title = $("#title").val();
+                    const content = $("#content").val();
+                    $.ajax({
+                        "type": 'POST',
+                        "url": "/post_new",
+                        "data": JSON.stringify({
+                            "category": category,
+                            "content": content,
+                            "title": title
+                        }),
+                        "success": (resbody) => {
+                            console.log(resbody)
+                            alert("发布成功 ... ");
+                            setTimeout(function () {
+                                window.location.href = '';
+                            }, 2000);
+                        },
+                        "error": (err) => {
+                            console.log(err, err.status, err.responseText)
+                        }
+                    });
+                }
+
+                function updateReply(postId) {
+                    //折叠时ajax
+                    if (!$("#demo" + postId).hasClass("show"))
+                        $.ajax({
+                            type: 'POST',
+                            url: "/reply",
+                            data: {
+                                postId: postId,
+                            },
+                            cache: false,
+                            error: function (err) {
+                                document.getElementById("alerttext").innerText = "无法连接到服务器，请稍后再试..."
+                                $("#myModal").modal();
+                            },
+                            success: function (data) {
+                                $("#reply" + postId).html(data);
+                            }
+                        });
+                }
+
+                function submitReply(postId) {
+                    let replytext = document.getElementById("replyinput").value;
+                    $.ajax({
+                        type: 'POST',
+                        url: "/add_reply",
+                        data: {
+                            postId: postId,
+                            replytext: replytext,
+                        },
+                        cache: false,
+                        error: function (err) {
+                            document.getElementById("alerttext").innerText = "无法连接到服务器，请稍后再试..."
+                            $("#myModal").modal();
+                        },
+                        success: function (data) {
+                            $("#reply" + postId).html(data);
+                        }
+                    });
+                }
+
+                var other_id_temp;
+                var other_name_temp;
+
+                function openChat(other_id, other_name) {
+                    // alert(other_id)
+                    // alert(other_name)
+                    $.ajax({
+                        type: 'POST',
+                        url: "/chat",
+                        data: {
+                            other_id: other_id,
+                            other_name: other_name,
+                        },
+                        cache: false,
+                        error: function (err) {
+                            document.getElementById("alerttext").innerText = "无法连接到服务器，请稍后再试..."
+                            $("#myModal").modal();
+                        },
+                        success: function (data) {
+                            $("#chatDiv").html(data);
+                            document.getElementById("chathead").innerText = "与" + other_name + "的会话..."
+                            other_id_temp = other_id;
+                            other_name_temp = other_name;
+                            $("#myChatModal").modal();
+                        }
+                    });
+                }
+
+                function submitChat() {
+                    let chattext = document.getElementById("chatinput").value;
+                    $.ajax({
+                        type: 'POST',
+                        url: "/add_chat",
+                        data: {
+                            other_id: other_id_temp,
+                            other_name: other_name_temp,
+                            chattext: chattext,
+                        },
+                        cache: false,
+                        error: function (err) {
+                            document.getElementById("alerttext").innerText = "无法连接到服务器，请稍后再试..."
+                            $("#myModal").modal();
+                        },
+                        success: function (data) {
+                            $("#chatDiv").html(data);
+                        }
+                    });
+                }
+
+                function openuserInfo() {
+                    $.ajax({
+                        type: 'GET',
+                        url: "/user_info",
+                        cache: false,
+                        error: function (err) {
+                            document.getElementById("alerttext").innerText = "无法连接到服务器，请稍后再试..."
+                            $("#myModal").modal();
+                        },
+                        success: function (data) {
+                            $("#chatDiv").html(data);
+                            $("#chatbottom").html("");
+                            document.getElementById("chathead").innerText = "个人信息..."
+                            $("#myChatModal").modal();
+                        }
+                    });
+                }
+
+                function knotPost(postid) {
+                    $.ajax({
+                        type: 'POST',
+                        url: "/knot_post",
+                        data: {
+                            postid: postid,
+                        },
+                        cache: false,
+                        error: function (err) {
+                            document.getElementById("alerttext").innerText = "无法连接到服务器，请稍后再试..."
+                            $("#myModal").modal();
+                        },
+                        success: function (data) {
+                            setTimeout(function () {
+                                $("#knotdiv" + postid).html(data);
+                            }, 500);
+                        }
+                    });
+                }
+
+                $(function () {
+                    $("#topBtn").click(function () {
+                        $("html,body").animate({
+                            scrollTop: $("body").offset().top
+                        }, 600);
+                    });
+                });
+            </script>
 </body>
 
 </html>

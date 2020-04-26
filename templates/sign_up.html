@@ -15,6 +15,8 @@
     <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
     <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
     <script src="../static/js/bootstrap.min.js"></script>
+    <!-- fonticon -->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
 <body style="background:url(./static/img/main-bg-compressor.jpg) no-repeat center center; background-size:cover;">
@@ -27,7 +29,7 @@
                     <br><br><br>
                     <div class="d-flex flex-column mb-3">
                         <div class="p-2 bg-success text-white">
-                            <h2><strong> 注 册</strong></h2>
+                            <h2><i class="fa fa-user-plus" aria-hidden="true"></i><strong> 注 册</strong></h2>
                         </div>
                         <div class="p-2 bg-light ">
                             <br>
@@ -35,7 +37,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"
                                         style="width: 130px; text-align:center;margin-left:auto;margin-right:auto;display:block;">
-                                        学 号：
+                                        <i class="fa fa-user-circle "></i> 学 号：
                                     </span>
                                 </div>
                                 <input type="text" name="userId" id="id" onblur="regexpId();" class="form-control"
@@ -45,7 +47,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"
                                         style="width: 130px; text-align:center;margin-left:auto;margin-right:auto;display:block;">
-                                        姓 名：
+                                        <i class="fa fa-id-card" aria-hidden="true"></i> 姓 名：
                                     </span>
                                 </div>
                                 <input type="text" name="userName" id="name" class="form-control" placeholder="请输入姓名..">
@@ -54,7 +56,7 @@
                                 <div class="input-group-prepend text-center">
                                     <span class="input-group-text"
                                         style="width: 130px; text-align:center;margin-left:auto;margin-right:auto;display:block;">
-                                        密 码：
+                                        <i class="fa fa-key fa-fw"></i> 密 码：
                                     </span>
                                 </div>
                                 <input type="password" name="userPsd" id="pass" class="form-control"
@@ -64,7 +66,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"
                                         style="width: 130px; text-align:center;margin-left:auto;margin-right:auto;display:block;">
-                                        确认密码：
+                                        <i class="fa fa-key fa-fw"></i> 确认：
                                     </span>
                                 </div>
                                 <input type="password" name="reuserPsd" id="repass" class="form-control"
@@ -78,12 +80,12 @@
                                 <div class="col-md-3 column">
                                     <!-- 要为button确定type="button"，默认为type="submit" -->
                                     <button type="button" onclick="checkregister();" class="btn btn-info btn-lg">
-                                        <strong>注 册</strong>
+                                        <i class="fa fa-user-plus" aria-hidden="true"></i><strong> 注 册</strong>
                                     </button>
                                 </div>
                                 <div class="col-md-3 column">
                                     <a href="/sign_in" class="btn btn-danger btn-lg" role="button">
-                                        <strong>返 回</strong>
+                                        <i class="fa fa-mail-reply" aria-hidden="true"></i><strong> 返 回</strong>
                                     </a>
                                 </div>
                                 <div class="col-md-3 column">

@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="lite-chatbox">
+        {% for item in replys %}
+        <hr />
+        {% if item["student_id"]==student_id %}
+        <div class="cright cmsg">
+            <img class="headIcon radius" ondragstart="return false;" oncontextmenu="return false;"
+                src="{{ url_for('static', filename='img/me.png') }}" />
+            <span class="name"><span class="htitle owner">我</span><strong>{{item["added_time"]}}</strong>
+            </span>
+            <span class="content">{{item["content"]}}</span>
+        </div>
+        {% else %}
+        <div class="cleft cmsg">
+            <img class="headIcon radius" ondragstart="return false;" oncontextmenu="return false;"
+                src="{{ url_for('static', filename='img/others.png') }}" />
+            <span class="name"><span class="htitle owner">{{item["name"]}}</span><strong>{{item["added_time"]}}</strong>
+                <a href="javascript:void(0);"
+                    onclick="openChat('{{item["user_id"]}}','{{item["name"]}}');">私聊</a></span>
+            <span class="content"> {{item["content"]}}</span>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>

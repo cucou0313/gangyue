@@ -33,6 +33,7 @@ CREATE TABLE `post` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` text NOT NULL,
   `category` enum('觅食','运动','学习','娱乐') NOT NULL,
+  `content` text NOT NULL,
   `added_time` datetime NOT NULL,
   `user_id` int(11) NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '1',

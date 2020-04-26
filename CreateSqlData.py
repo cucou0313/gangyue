@@ -19,6 +19,7 @@ class Post(Base):
     id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title = Column(Text, nullable=False)
     category = Column(String(20), nullable=False)
+    content = db.Column(db.Text, nullable=False)
     added_time = Column(DateTime, nullable=False)
     user_id = Column(Integer, nullable=False)
     is_active = Column(Integer, nullable=False, default=1)
@@ -29,13 +30,9 @@ category = ['觅食', '运动', '学习', '娱乐']
 for i in range(1, 100):
     post = Post(title='test%s' % i,
                 category=category[i % 4],
+                content == 'test%s' % i,
                 added_time=datetime.datetime.now(),
                 user_id=i % 3 + 1)
-    # print(post.title, post.category, post.added_time, post.user_id)
     session.add(post)
 session.commit()
 session.close()
-
-# session.add_all([student1, student2, student3])
-# session.commit()
-# session.close()
