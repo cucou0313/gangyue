@@ -17,9 +17,10 @@
     <script src="../static/js/bootstrap.min.js"></script>
     <style>
         body{
-            background-image: url(../static/img/mainpage_bg.png)
+            background-image: url(../static/img/mainpage_bg.png);
+            background-attachment:fixed;
         }
-        
+
         .box{
             position:fixed;
             right:15px;
@@ -32,23 +33,12 @@
             border-radius: 20%;
             overflow: hidden;
         }
-        /* .box:hover:before{
-            top:50%
-        } */
+
         .box:hover{
-            /* visibility: hidden; */
+
             cursor:pointer;
         }
-        /* .box:before{
-            position: absolute;
-            top: -50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-            content:'回到顶部';
-            width: 40px;
-            color:peru;
-            font-weight:bold;
-        }     */
+
         .box-in{
             visibility: visible;
             display:inline-block;
@@ -84,19 +74,23 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="/user_info"><strong>个人信息</strong></a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/logout"><strong>退 出</strong></a>
+                                </li>
                             </ul>
                             <!-- 导航栏居右的写法 justify-content-end -->
                             <div class="collapse navbar-collapse justify-content-end">
                                 <ul class="navbar-nav">
                                     <form class="form-inline" action="/search/1" method="POST" id="searchForm">
-                                        <input class="form-control" type="text" id="searchValue" name="searchValue"
-                                            placeholder="搜索...">
-                                        <button class="btn btn-primary" type="submit" id="searchBtn"
-                                            onclick="search();">Search</button>
+                                        <div class="input-group">
+                                            <input type="text" id="searchValue" class="form-control" placeholder="在此输入..." name="searchValue">
+                                            <div class="input-group-append">
+                                              <span style="cursor: pointer;" id="searchBtn" onclick="search();" class="input-group-text">🔎</span>
+                                            </div>
+                                          </div>
+
                                     </form>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/logout"><strong>退 出</strong></a>
-                                    </li>
+
                                 </ul>
                             </div>
                         </nav>
@@ -180,6 +174,7 @@
                 timer = requestAnimationFrame(func);
                 if(t == d){
                 cancelAnimationFrame(timer);
+                
                 }
             });
         }
