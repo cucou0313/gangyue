@@ -328,20 +328,21 @@ def main(category='all', page=1):
                                                  per_page=10,
                                                  error_out=False)
     elif category == 'mine':
-        paginate = Post.query.filter(Post.user_id == userId).order_by(
-            Post.added_time.desc()).paginate(page,
-                                             per_page=10,
-                                             error_out=False)
+        paginate = PostName.query.filter(PostName.user_id == userId).order_by(
+            PostName.added_time.desc()).paginate(page,
+                                                 per_page=10,
+                                                 error_out=False)
     elif category == 'others':
-        paginate = Post.query.filter(Post.user_id != userId).order_by(
-            Post.added_time.desc()).paginate(page,
-                                             per_page=10,
-                                             error_out=False)
+        paginate = PostName.query.filter(PostName.user_id != userId).order_by(
+            PostName.added_time.desc()).paginate(page,
+                                                 per_page=10,
+                                                 error_out=False)
     else:
-        paginate = Post.query.filter(Post.category == category).order_by(
-            Post.added_time.desc()).paginate(page,
-                                             per_page=10,
-                                             error_out=False)
+        paginate = PostName.query.filter(
+            PostName.category == category).order_by(
+                PostName.added_time.desc()).paginate(page,
+                                                     per_page=10,
+                                                     error_out=False)
     data = {
         'userName': userName,
         'student_id': student_id,
