@@ -26,12 +26,46 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="{{ url_for('static', filename='js/bootstrap-select.min.js') }}"></script>
     <style>
+        body {
+            background-image: url(../static/img/mainpage_bg.png);
+            background-attachment: fixed;
+        }
+
+        .box {
+            position: fixed;
+            right: 15px;
+            bottom: 20px;
+            height: 50px;
+            width: 50px;
+            text-align: center;
+            padding-top: 20px;
+            background-color: lightblue;
+            border-radius: 20%;
+            overflow: hidden;
+        }
+
+        .box:hover {
+
+            cursor: pointer;
+        }
+
+        .box-in {
+            visibility: visible;
+            display: inline-block;
+            height: 20px;
+            width: 20px;
+            border: 3px solid black;
+            border-color: white transparent transparent white;
+            transform: rotate(45deg);
+        }
+
         #topBtn {
             position: fixed;
             bottom: 50px;
             right: 50px;
             width: 60px;
             height: 60px;
+
         }
     </style>
 </head>
@@ -179,6 +213,9 @@
                                     <a class="nav-link  js-canvi-open-button--right btn">
                                         <i class="fa fa-gears fa-spin fa-2x"></i>
                                         <strong>More Info</strong></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/logout"><strong>退 出</strong></a>
                                 </li>
                             </ul>
                         </div>
