@@ -337,7 +337,13 @@
                                     class="fa fa-comments-o fa-2x "></i>
                                 <span class="badge badge-light"> ... </span></button>
                             <div id="demo{{ item.id }}" class="collapse">
-                                <div id="reply{{ item.id }}"></div>
+                                <div id="reply{{ item.id }}">
+                                    <div style="text-align:center"><br><i class="fa fa-spinner fa-4x fa-spin"
+                                            aria-hidden="true" style="color:rgb(0, 0, 0)"></i><strong
+                                            style="color:rgb(0, 0, 0)">
+                                            正在加载...</strong><br>
+                                    </div>
+                                </div>
                                 <hr />
                                 <form>
                                     <div class="input-group mb-3">
@@ -401,7 +407,10 @@
 
                 <!-- 模态框主体 -->
                 <div id="chatDiv" class="modal-body">
-                    模态框内容..
+                    <div style="text-align:center"><br><i class="fa fa-spinner fa-4x fa-spin" aria-hidden="true"
+                            style="color:rgb(0, 0, 0)"></i><strong style="color:rgb(0, 0, 0)">
+                            正在加载...</strong><br>
+                    </div>
                 </div>
 
                 <!-- 模态框底部 -->
@@ -574,7 +583,9 @@
                             $("#myModal").modal();
                         },
                         success: function (data) {
-                            $("#reply" + postId_temp).html(data);
+                            setTimeout(function () {
+                                $("#reply" + postId_temp).html(data);
+                            }, 1000);
                         }
                     });
                 }
@@ -636,7 +647,9 @@
                             alert("无法连接到服务器，请稍后再试...");
                         },
                         success: function (data) {
-                            $("#chatDiv").html(data);
+                            setTimeout(function () {
+                                $("#chatDiv").html(data);
+                            }, 1000);
                         }
                     });
                 }
